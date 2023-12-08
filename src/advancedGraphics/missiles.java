@@ -73,7 +73,12 @@ public class missiles extends JPanel {
     public boolean isShow(){
         return show;
     }
-
+    public void setCityX(int cx){
+        targetX=cx;
+    }
+    publix void setCityY(int cy){
+        targetY=cy;
+    }
     
     public boolean intersects( missiles other ) {
         Rectangle one = new Rectangle(x, y, w, h);
