@@ -28,8 +28,15 @@ public class missiles extends JPanel {
         window.fillRect(x, y, w, h);
     }
     public void move(){
-        y+=vertVelocity;
-        x+=horzVelocity;
+        if(x>cx) {
+            y += (int) Math.abs(Math.tan((cy-y)/(cx-x)));
+            x -= (int) Math.abs(Math.tan((cy-y)/(cx-x)));
+        }
+        else{
+            y += (int) Math.abs(Math.tan((cy-y)/(cx-x)));
+            x += (int) Math.abs(Math.tan((cy-y)/(cx-x)));
+        }
+
     }
 
     public void changeAngle(int level) {
