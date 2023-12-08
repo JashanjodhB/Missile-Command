@@ -62,15 +62,9 @@ private int[] houseX,houseY;
 		g2.drawImage(back,0,0,1200,600,this);
 		window.drawString("Mouse  coordinates " + "(" + MouseInfo.getPointerInfo().getLocation().x + "   " + MouseInfo.getPointerInfo().getLocation().y + ")", 250, 30 );	
 		
-
-
-		
 		crosshair plus=new crosshair(mouse_x,mouse_y);
 		plus.paint(window);
 
-
-		int[] houseX= {200,350,450,750,900,1000};
-		int[] houseY= {500,500,500,490,490,490};
 		for(int x=0;x<6;x++){
 			cities city= new cities(houseX[x], houseY[x]);
 			city.paint(window);
