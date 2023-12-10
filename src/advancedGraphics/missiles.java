@@ -95,5 +95,29 @@ public class missiles extends JPanel {
         }
         return false;
     }
+
+    public void inBounds(){
+        if(x<0 || x>1200 || y<0){
+            show=false;
+        }
+        if(x<40 && x>0 && y>540){
+            show= false;
+        }
+        if(x<150 && x>45 && y>510){
+            show= false;
+        }
+        if(x<525 && x>150 && y>530){
+            show= false;
+        }
+        if(x<680 && x>525 && y>500){
+            show= false;
+        }
+        if(x<1090 && x>680 && y>530){
+            show= false;
+        }
+        if(x<1200 && x>1090 && y>500){
+            show= false;
+        }
+    }
     
 }
