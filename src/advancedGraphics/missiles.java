@@ -76,7 +76,7 @@ public class missiles extends JPanel {
     public void setCityX(int cx){
         targetX=cx;
     }
-    publix void setCityY(int cy){
+    public void setCityY(int cy){
         targetY=cy;
     }
     
