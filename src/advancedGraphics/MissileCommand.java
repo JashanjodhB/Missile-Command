@@ -83,22 +83,10 @@ private int[] houseX,houseY;
 		for(missiles m: ar){
 			if(m.isShow()){
 				m.move();
-				
+				m.inBounds();
 			}
-		}
-		
-
-			
-		
+		}		
 	}
-
-	
-
-
-
-
-
-
 	public void mousePressed(MouseEvent e){}
 	public void mouseReleased(MouseEvent e){}
 	public void mouseEntered(MouseEvent e){}
