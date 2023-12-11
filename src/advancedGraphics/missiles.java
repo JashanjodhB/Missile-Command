@@ -27,14 +27,14 @@ public class missiles extends JPanel {
         window.setColor(Color.RED);
         window.fillRect(x, y, w, h);
     }
-    public void move(){
-        if(x>cx) {
-            y += (int) Math.abs(Math.tan((cy-y)/(cx-x)));
-            x -= (int) Math.abs(Math.tan((cy-y)/(cx-x)));
+      public void move(){
+        if(x>targetX) {
+            y += (int) Math.abs(Math.tan((targetY-y)/(targetX-x)));
+            x -= (int) Math.abs(Math.tan((targetY-y)/(targetX-x)));
         }
         else{
-            y += (int) Math.abs(Math.tan((cy-y)/(cx-x)));
-            x += (int) Math.abs(Math.tan((cy-y)/(cx-x)));
+            y += (int) Math.abs(Math.tan((targetY-y)/(targetX-x)));
+            x += (int) Math.abs(Math.tan((targetY-y)/(targetX-x)));
         }
 
     }
