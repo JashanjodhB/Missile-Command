@@ -118,6 +118,10 @@ public class missiles extends JPanel {
         if(x<1200 && x>1090 && y>500){
             show= false;
         }
+        if(!show){
+            explosion ex = new explosion(x, y, true);
+            ex.paintComponent(window);
+        }
     }
     
 }
