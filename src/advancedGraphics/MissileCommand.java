@@ -85,7 +85,15 @@ private int[] houseX,houseY;
 				m.move();
 				m.inBounds();
 			}
-		}		
+		}
+		for(int c=0;c<cities.size();c++){
+				if(m.intersects(cities.get(c))){
+					ar.remove(m);
+					cities.remove(c);
+					houseX.remove(c);
+					houseY.remove(c);
+				}
+			}
 	}
 	public void mousePressed(MouseEvent e){}
 	public void mouseReleased(MouseEvent e){}
