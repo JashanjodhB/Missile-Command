@@ -21,7 +21,7 @@ private Satellite woah;
 private Plane plane;
 private ArrayList<CounterMissile> cmis;
 private ArrayList<cities> cities;	
-private int[] houseX,houseY;
+private ArrayList<Integer> houseX,houseY;
 	public MissileCommand ()
 	{
 		plane=new Plane(20,70,6);
@@ -30,10 +30,18 @@ private int[] houseX,houseY;
 		setBackground(Color.WHITE);
 		ar=new ArrayList<missiles>();
 		cities=new ArrayList<>();
-		houseX= new int[] {200, 350, 450, 750, 900, 1000};
-		houseY= new int[] {500, 500, 500, 490, 490, 490};
+		int[] xCoord=new int[] {200, 350, 450, 750, 900, 1000};
+		int[] yCoord=new int[] {500, 500, 500, 490, 490, 490};
+		houseX= new ArrayList<>();
+		houseY= new ArrayList<>();
+		for(int x=0;x<xCoord.length;x++){
+			houseX.add(xCoord[x]);
+		}
+		for(int y=0;y<yCoord.length;y++){
+			houseY.add(yCoord[y]);
+		}
 		for(int x=0;x<6;x++){
-			cities.add(new cities(houseX[x], houseY[x],100,50));
+			cities.add(new cities(houseX.get(x), houseY.get(x),100,50));
 		}
 		for(int z=0; z<30;z++){
 			ar.add(new missiles(0,0,0,2,2,0,0,false));
@@ -73,8 +81,7 @@ private int[] houseX,houseY;
 		crosshair plus=new crosshair(mouse_x,mouse_y);
 		plus.paint(window);
 
-		for(int x=0;x<6;x++){
-			cities city= new cities(houseX[x], houseY[x]);
+		for(cities city:cities){
 			city.paint(window);
 		}
 		for(CounterMissile c:cmis){
@@ -107,7 +114,11 @@ private int[] houseX,houseY;
 	public void mouseReleased(MouseEvent e){}
 	public void mouseEntered(MouseEvent e){}
 	public void mouseExited(MouseEvent e){}
-	public void mouseClicked(MouseEvent e){}
+	public void mouseClicked(MouseEvent e){
+		if( e.getButton() == 1) {
+			cmis.add(new CounterMissile(2,600, 490, 4, 4,mouse_x,mouse_y));
+		}
+	}
 	public void mouseDragged(MouseEvent e){}
 	public void mouseMoved(MouseEvent e){
 		mouse_x= e.getX();
