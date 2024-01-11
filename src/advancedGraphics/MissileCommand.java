@@ -16,14 +16,15 @@ import java.awt.event.MouseMotionListener;
 
 public class MissileCommand extends JPanel implements Runnable,MouseListener,MouseMotionListener{
 private int mouse_x,mouse_y;
-
 private ArrayList<missiles> ar;
 private Satellite woah;
+private Plane plane;
 private ArrayList<CounterMissile> cmis;
 private ArrayList<cities> cities;	
 private int[] houseX,houseY;
 	public MissileCommand ()
 	{
+		plane=new Plane(20,70,6);
 		mouse_x=0;
 		mouse_y=0;
 		setBackground(Color.WHITE);
@@ -64,7 +65,11 @@ private int[] houseX,houseY;
 		Image back= Toolkit.getDefaultToolkit().getImage("background.png");
 		g2.drawImage(back,0,0,1200,600,this);
 		window.drawString("Mouse  coordinates " + "(" + MouseInfo.getPointerInfo().getLocation().x + "   " + MouseInfo.getPointerInfo().getLocation().y + ")", 250, 30 );	
-		
+		plane.paint(window);
+		plane.move();
+		if(Math.random()>.9){
+			plane.shoot(ar);
+		}
 		crosshair plus=new crosshair(mouse_x,mouse_y);
 		plus.paint(window);
 
