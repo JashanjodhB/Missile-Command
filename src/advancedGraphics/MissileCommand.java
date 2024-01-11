@@ -40,11 +40,14 @@ private int[] houseX,houseY;
 		cmis=new ArrayList<>();
 		woah = new Satellite(20, 70, 50, 50, 6);
 		for(int x=0;x<10;x++){
+			int target=(int)(Math.random()*6);
 			ar.get(x).setX((int)(Math.random()*1200));
 			ar.get(x).setY(100);
 			ar.get(x).setShow(true);
-			ar.get(x).setHorzVelocity(1);
-			ar.get(x).setVertVelocity(5);
+			ar.get(x).setHorzVelocity(2);
+			ar.get(x).setVertVelocity(2);
+			ar.get(x).setCityX(houseX.get(target));
+			ar.get(x).setCityY(houseY.get(target));
 		}
 		addMouseListener(this);
 		addMouseMotionListener(this);
