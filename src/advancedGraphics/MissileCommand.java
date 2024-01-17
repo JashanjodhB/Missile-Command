@@ -94,11 +94,7 @@ private ArrayList<Integer> houseX,houseY;
 		}
 		woah.paint(window);
 		woah.move();
-		for(missiles m: ar){
-			if(m.isShow()){
-				m.paint(window);
-			}
-		}
+
 		for(missiles m: ar){
 			if(m.isShow()){
 				m.move();
