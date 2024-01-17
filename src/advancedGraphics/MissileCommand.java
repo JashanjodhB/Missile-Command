@@ -102,17 +102,20 @@ private ArrayList<Integer> houseX,houseY;
 		for(missiles m: ar){
 			if(m.isShow()){
 				m.move();
-				m.inBounds();
+				m.inBounds(window);
+				m.paintComponent(window);
 			}
-		}
-		for(int c=0;c<cities.size();c++){
+			for(int c=0;c<cities.size();c++){
 				if(m.intersects(cities.get(c))){
-					ar.remove(m);
+					m.setShow(false);
+					explosion ex = new explosion(m.getX(), m.getY(), true);
+            				ex.paintComponent(window);
 					cities.remove(c);
 					houseX.remove(c);
 					houseY.remove(c);
 				}
 			}
+		}
 	}
 	public void keyTyped(KeyEvent e) {}
 	public void keyPressed(KeyEvent e) {
