@@ -13,8 +13,10 @@ import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
+import java.awt.event.KeyListener;
 
-public class MissileCommand extends JPanel implements Runnable,MouseListener,MouseMotionListener{
+public class MissileCommand extends JPanel implements Runnable,MouseListener,MouseMotionListener,KeyListener{
 private int mouse_x,mouse_y;
 private ArrayList<missiles> ar;
 private Satellite woah;
@@ -60,6 +62,8 @@ private ArrayList<Integer> houseX,houseY;
 		}
 		addMouseListener(this);
 		addMouseMotionListener(this);
+		addKeyListener( this );
+		setFocusable( true );
 		new Thread(this).start();
 	}
 
@@ -110,15 +114,24 @@ private ArrayList<Integer> houseX,houseY;
 				}
 			}
 	}
+	public void keyTyped(KeyEvent e) {}
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == 65) {
+			cmis.add(new CounterMissile(2,90, 505, 4, 4,mouse_x,mouse_y,true));
+		}
+		if(e.getKeyCode() == 83) {
+			cmis.add(new CounterMissile(2,600, 490, 4, 4,mouse_x,mouse_y,true));
+		}
+		if(e.getKeyCode() == 68) {
+			cmis.add(new CounterMissile(2,1140, 505, 4, 4,mouse_x,mouse_y,true));
+		}
+	}
+	public void keyReleased(KeyEvent e) {}
 	public void mousePressed(MouseEvent e){}
 	public void mouseReleased(MouseEvent e){}
 	public void mouseEntered(MouseEvent e){}
 	public void mouseExited(MouseEvent e){}
-	public void mouseClicked(MouseEvent e){
-		if( e.getButton() == 1) {
-			cmis.add(new CounterMissile(2,600, 490, 4, 4,mouse_x,mouse_y));
-		}
-	}
+	public void mouseClicked(MouseEvent e){}
 	public void mouseDragged(MouseEvent e){}
 	public void mouseMoved(MouseEvent e){
 		mouse_x= e.getX();
