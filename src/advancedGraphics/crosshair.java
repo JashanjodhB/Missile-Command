@@ -13,12 +13,13 @@ public class crosshair extends MissileCommand {
         y= ey;
         x= ex;
     }
+    
     public void paint(Graphics window){
+        
         window.setColor(Color.RED);
         window.fillRect(x-3, y, 5, 2);
         window.fillRect(x, y-3,2, 5);
         window.fillRect(x+3, y, 5, 2);
         window.fillRect(x, y+3, 2, 5);
     }
-    
 }
