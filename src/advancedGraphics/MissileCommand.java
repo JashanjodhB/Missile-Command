@@ -19,8 +19,10 @@ private ArrayList<missiles> ar;
 private ArrayList<CounterMissile> cAr;
 private ArrayList<Integer> houseX,houseY;
 private ArrayList<cities> cities;
+private int score;
 	public MissileCommand ()
 	{
+		score=0;
 		mouse_x=0;
 		mouse_y=0;
 		setBackground(Color.WHITE);
@@ -52,7 +54,7 @@ private ArrayList<cities> cities;
 		new Thread(this).start();
 	}
 	
-	public void paint( Graphics window )
+	public void paintComponent( Graphics window )
 	{
 		window.setColor(Color.BLACK);
 		window.fillRect( 0,0, 1200, 600);
@@ -63,11 +65,11 @@ private ArrayList<cities> cities;
 		window.drawString("Mouse  coordinates " + "(" + MouseInfo.getPointerInfo().getLocation().x + "   " + MouseInfo.getPointerInfo().getLocation().y + ")", 250, 30 );	
 		
 		crosshair plus=new crosshair(mouse_x,mouse_y);
-		plus.paint(window);
+		plus.paintComponent(window);
 		
 	
 		for(cities c: cities){
-			c.paint(window);
+			c.paintComponent(window);
 		}
 		
 		
@@ -77,13 +79,14 @@ private ArrayList<cities> cities;
 			if(cAr.get(m).isShow()){
 				cAr.get(m).move();
 				cAr.get(m).IsInBounds(window);
-				cAr.get(m).paint(window);
+				cAr.get(m).paintComponent(window);
 			}
 			for(int c=0;c<ar.size();c++){
 				if(cAr.get(m).isShow()|| ar.get(c).isShow()){
 					if(cAr.get(m).intersects(ar.get(c))){
+						score+=25;
 						explosion ex = new explosion(cAr.get(m).getX(), cAr.get(m).getY(), true);
-						ex.paint(window);
+						ex.paintComponent(window);
 						cAr.remove(m);
 						ar.remove(c);
 					}
@@ -95,16 +98,25 @@ private ArrayList<cities> cities;
 			if(m.isShow()){
 				m.move();
 				m.inBounds(window);
-				m.paint(window);
+				m.paintComponent(window);
 			}
 			for(int c=0;c<cities.size();c++){
 				if(m.intersects(cities.get(c))){
 					m.setShow(false);
 					explosion ex = new explosion(m.getX(), m.getY(), true);
-            		ex.paint(window);
+            		ex.paintComponent(window);
 					cities.remove(c);
-					houseX.remove(c);
-					houseY.remove(c);
+
+				}
+			}
+			if(score>=1250&&cities.size()<6){
+			score-=1250;
+			for (int i = 0; i < 6; i++) {
+				if(houseX.contains(houseX.get(i)){
+				}
+				else {
+					cities.add(new cities(houseX.get(i),houseY.get(i);
+					break;
 				}
 			}
 		}
