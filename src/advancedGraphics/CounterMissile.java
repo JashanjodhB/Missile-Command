@@ -43,7 +43,7 @@ public class CounterMissile extends missiles{
         }
         if(!show){
             explosion ex = new explosion(getX(), getY(), true);
-            ex.paintComponent(window);
+            ex.paint(window);
         }
         
     }
