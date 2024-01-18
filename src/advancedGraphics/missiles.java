@@ -12,8 +12,6 @@ public class missiles extends JPanel {
     private int vertVelocity,horzVelocity,x,y,w,h,targetX,targetY;
     boolean show;
     missiles(int velocity, int xe,int ye,int wi,int he, int tarX,int tarY,boolean sh){
-        vertVelocity=velocity;
-        horzVelocity=velocity;
         y=ye;
         x=xe; 
         w=wi;
@@ -21,21 +19,24 @@ public class missiles extends JPanel {
         targetX=tarX;
         targetY=tarY;
         show=sh;
+        vertVelocity=(int)(targetY-getY())/10;
+        horzVelocity=(int)(targetX-getX())/10;
     }
    
-    public void paint(Graphics window){
+    public missiles(int xe, int ye, int we, int he) {
+        x=xe;
+        y=ye;
+        w=we;
+        h=he;
+    }
+
+    public void paintComponent(Graphics window){
         window.setColor(Color.RED);
         window.fillRect(x, y, w, h);
     }
       public void move(){
-        if(x>targetX) {
-            y += (int) Math.abs(Math.tan((targetY-y)/(targetX-x)));
-            x -= (int) Math.abs(Math.tan((targetY-y)/(targetX-x)));
-        }
-        else{
-            y += (int) Math.abs(Math.tan((targetY-y)/(targetX-x)));
-            x += (int) Math.abs(Math.tan((targetY-y)/(targetX-x)));
-        }
+        x+=horzVelocity;
+        y+=vertVelocity;
 
     }
 
@@ -96,7 +97,7 @@ public class missiles extends JPanel {
         return false;
     }
 
-    public void inBounds(){
+    public void inBounds(Graphics window){
         if(x<0 || x>1200 || y<0){
             show=false;
         }
