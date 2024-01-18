@@ -12,7 +12,6 @@ public class cities extends missiles {
         super(ex, ey,we,he);
     }
 
-
     public void paint(Graphics window){
         Graphics2D g2= (Graphics2D) window;
         Image citi=Toolkit.getDefaultToolkit().getImage("Cities.png"); 
