@@ -35,7 +35,7 @@ public class CounterMissile extends missiles{
     }
     public boolean intersects( missiles other ) {
         if(explo){
-            Rectangle one = new Rectangle(getX(), getY() , 90,90);
+            Rectangle one = new Rectangle(getX()-30, getY()-30 , 90,90);
             Rectangle two = new Rectangle(other.getX(),other.getY(),other.getW(),other.getH());
             if (one.intersects(two)) {
                explo=false;
