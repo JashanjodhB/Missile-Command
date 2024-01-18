@@ -17,7 +17,7 @@ public class explosion extends JPanel {
         y=ey;
         show=sh;
     }
-    public void paintComponent(Graphics window){
+    public void paint(Graphics window){
         if(show){
             window.setColor(Color.ORANGE);
             window.fillOval(x-30,y-30,60,60);
