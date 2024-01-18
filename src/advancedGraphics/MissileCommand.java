@@ -112,7 +112,7 @@ private int score;
 			if(score>=1250&&cities.size()<6){
 			score-=1250;
 			for (int i = 0; i < 6; i++) {
-				if(houseX.contains(houseX.get(i)){
+				if(houseX.contains(houseX.get(i))){
 				}
 				else {
 					cities.add(new cities(houseX.get(i),houseY.get(i);
