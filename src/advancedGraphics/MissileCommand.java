@@ -52,7 +52,7 @@ private ArrayList<cities> cities;
 		new Thread(this).start();
 	}
 	
-	public void paintComponent( Graphics window )
+	public void paint( Graphics window )
 	{
 		window.setColor(Color.BLACK);
 		window.fillRect( 0,0, 1200, 600);
@@ -63,11 +63,11 @@ private ArrayList<cities> cities;
 		window.drawString("Mouse  coordinates " + "(" + MouseInfo.getPointerInfo().getLocation().x + "   " + MouseInfo.getPointerInfo().getLocation().y + ")", 250, 30 );	
 		
 		crosshair plus=new crosshair(mouse_x,mouse_y);
-		plus.paintComponent(window);
+		plus.paint(window);
 		
 	
 		for(cities c: cities){
-			c.paintComponent(window);
+			c.paint(window);
 		}
 		
 		
@@ -77,13 +77,13 @@ private ArrayList<cities> cities;
 			if(cAr.get(m).isShow()){
 				cAr.get(m).move();
 				cAr.get(m).IsInBounds(window);
-				cAr.get(m).paintComponent(window);
+				cAr.get(m).paint(window);
 			}
 			for(int c=0;c<ar.size();c++){
 				if(cAr.get(m).isShow()|| ar.get(c).isShow()){
 					if(cAr.get(m).intersects(ar.get(c))){
 						explosion ex = new explosion(cAr.get(m).getX(), cAr.get(m).getY(), true);
-						ex.paintComponent(window);
+						ex.paint(window);
 						cAr.remove(m);
 						ar.remove(c);
 					}
@@ -95,13 +95,13 @@ private ArrayList<cities> cities;
 			if(m.isShow()){
 				m.move();
 				m.inBounds(window);
-				m.paintComponent(window);
+				m.paint(window);
 			}
 			for(int c=0;c<cities.size();c++){
 				if(m.intersects(cities.get(c))){
 					m.setShow(false);
 					explosion ex = new explosion(m.getX(), m.getY(), true);
-            		ex.paintComponent(window);
+            		ex.paint(window);
 					cities.remove(c);
 					houseX.remove(c);
 					houseY.remove(c);
