@@ -30,7 +30,7 @@ public class missiles extends JPanel {
         h=he;
     }
 
-    public void paintComponent(Graphics window){
+    public void paint(Graphics window){
         window.setColor(Color.RED);
         window.fillRect(x, y, w, h);
     }
