@@ -121,7 +121,7 @@ public class missiles extends JPanel {
         }
         if(!show){
             explosion ex = new explosion(x, y, true);
-            ex.paintComponent(window);
+            ex.paint(window);
         }
     }
     
