@@ -19,10 +19,9 @@ private ArrayList<missiles> ar;
 private ArrayList<CounterMissile> cAr;
 private ArrayList<Integer> houseX,houseY;
 private ArrayList<cities> cities;
-private int score;
+private ArrayList<explosion> explo;
 	public MissileCommand ()
 	{
-		score=0;
 		mouse_x=0;
 		mouse_y=0;
 		setBackground(Color.WHITE);
@@ -45,7 +44,7 @@ private int score;
 			ar.add(new missiles(0,0,0,2,2,0,0,false));
 		}
 		cAr= new ArrayList<CounterMissile>();
-		
+		explo=new ArrayList<explosion>();
 		
 		addMouseListener(this);
 		addKeyListener(this);
@@ -54,7 +53,7 @@ private int score;
 		new Thread(this).start();
 	}
 	
-	public void paintComponent( Graphics window )
+	public void paint( Graphics window )
 	{
 		window.setColor(Color.BLACK);
 		window.fillRect( 0,0, 1200, 600);
@@ -65,58 +64,51 @@ private int score;
 		window.drawString("Mouse  coordinates " + "(" + MouseInfo.getPointerInfo().getLocation().x + "   " + MouseInfo.getPointerInfo().getLocation().y + ")", 250, 30 );	
 		
 		crosshair plus=new crosshair(mouse_x,mouse_y);
-		plus.paintComponent(window);
+		plus.paint(window);
 		
 	
 		for(cities c: cities){
-			c.paintComponent(window);
+			c.paint(window);
 		}
 		
-		
+		for(explosion e:explo){
+			e.paint(window);
+			e.setShow(false);
+		}
 	
 			
 		for(int m=0;m<cAr.size();m++){
 			if(cAr.get(m).isShow()){
 				cAr.get(m).move();
 				cAr.get(m).IsInBounds(window);
-				cAr.get(m).paintComponent(window);
-			}
-			for(int c=0;c<ar.size();c++){
-				if(cAr.get(m).isShow()|| ar.get(c).isShow()){
-					if(cAr.get(m).intersects(ar.get(c))){
-						score+=25;
-						explosion ex = new explosion(cAr.get(m).getX(), cAr.get(m).getY(), true);
-						ex.paintComponent(window);
-						cAr.remove(m);
-						ar.remove(c);
+				cAr.get(m).paint(window);
+				for(int c=0;c<ar.size();c++){
+					if(cAr.get(m).isShow()|| ar.get(c).isShow()){
+						if(cAr.get(m).intersects(ar.get(c))){
+							explo.add(new explosion(cAr.get(m).getX(), cAr.get(m).getY(), true)) ;
+							cAr.remove(m);
+							ar.remove(c);
+						}
 					}
+					
 				}
-				
 			}
+			
 		}
 		for(missiles m: ar){
 			if(m.isShow()){
 				m.move();
 				m.inBounds(window);
-				m.paintComponent(window);
+				m.paint(window);
 			}
 			for(int c=0;c<cities.size();c++){
 				if(m.intersects(cities.get(c))){
 					m.setShow(false);
-					explosion ex = new explosion(m.getX(), m.getY(), true);
-            		ex.paintComponent(window);
+					explo.add(new explosion(m.getX(), m.getY(), true));
+            		
 					cities.remove(c);
-
-				}
-			}
-			if(score>=1250&&cities.size()<6){
-			score-=1250;
-			for (int i = 0; i < 6; i++) {
-				if(houseX.contains(houseX.get(i))){
-				}
-				else {
-					cities.add(new cities(houseX.get(i),houseY.get(i);
-					break;
+					houseX.remove(c);
+					houseY.remove(c);
 				}
 			}
 		}
