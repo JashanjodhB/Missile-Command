@@ -103,7 +103,16 @@ private boolean gameOver;
 							ar.remove(c);
 						}
 					}
-					
+				}
+				for(int s=0;s<space.size();s++){
+					if(cAr.get(m).isShow()|| space.get(s).isShow()){
+						if(cAr.get(m).intersects(space.get(s))){
+							Explosion ex = new Explosion(cAr.get(m).getX(), cAr.get(m).getY(), true);
+							ex.paint(window);
+							cAr.remove(m);
+							space.remove(s);
+						}
+					}
 				}
 			}
 			else{
