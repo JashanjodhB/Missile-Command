@@ -22,7 +22,6 @@ private ArrayList<cities> cities;
 private ArrayList<explosion> explo;
 private ammunition am;
 private boolean gameOver;
-private ArrayList<Satellite> space;
 	public MissileCommand ()
 	{
 		score=0;
@@ -42,7 +41,6 @@ private ArrayList<Satellite> space;
 		for(int y=0;y<yCoord.length;y++){
 			houseY.add(yCoord[y]);
 		}
-		space=new ArrayList<Satellite>();
 		cities = new ArrayList<cities>();
 		ar=new ArrayList<missiles>();
 		for(int x=0;x<6;x++){
@@ -50,9 +48,6 @@ private ArrayList<Satellite> space;
 		}
 		for(int z=0; z<100;z++){
 			ar.add(new missiles(0,0,0,2,2,0,0,false));
-		}
-		for(int x=0;x<10;x++) {
-			space.add(new Satellite(0, 50, 50, 50, 5, false));
 		}
 		cAr= new ArrayList<CounterMissile>();
 		explo=new ArrayList<explosion>();
@@ -73,7 +68,7 @@ private ArrayList<Satellite> space;
 		Image back= Toolkit.getDefaultToolkit().getImage("background.png");
 		g2.drawImage(back,0,0,1200,600,this);
 		if(!gameOver){
-		window.drawString("Mouse  coordinates " + "(" + MouseInfo.getPointerInfo().getLocation().x + "   " + MouseInfo.getPointerInfo().getLocation().y + ")", 250, 30 );	
+//		window.drawString("Mouse  coordinates " + "(" + MouseInfo.getPointerInfo().getLocation().x + "   " + MouseInfo.getPointerInfo().getLocation().y + ")", 250, 30 );	
 		
 		crosshair plus=new crosshair(mouse_x,mouse_y);
 		plus.paint(window);
@@ -122,21 +117,29 @@ private ArrayList<Satellite> space;
 				m.inBounds(window);
 				m.paint(window);
 			}
-			for(int c=0;c<cities.size();c++){
-				if(m.intersects(cities.get(c))){
-					m.setShow(false);
-					explo.add(new explosion(m.getX(), m.getY(), true));
-					cities.remove(c);
+		}
+		for (int m = 0; m < cities.size(); m++) {
+			for (int c = 0; c < ar.size(); c++) {
+				if (cities.get(m).isShow() || ar.get(c).isShow()) {
+					if (cities.get(m).intersects(ar.get(c))) {
+						explosion ex = new explosion(cAr.get(m).getX(), cAr.get(m).getY(), true);
+						ex.paintComponent(window);
+						cities.remove(m);
+						ar.remove(c);
+					}
 				}
 			}
-			if(score>=1250&&cities.size()<6){
-				score-=1250;
-				for (int i = 0; i < 6; i++) {
-					if(houseX.contains(houseX.get(i))){
-					}
-					else {
-						cities.add(new cities(houseX.get(i),houseY.get(i),100,50));
-					}
+		}	
+			if (score >= 1250 && cities.size() < 6) {
+			score -= 1250;
+			ArrayList<Integer> hx = new ArrayList<Integer>();
+			for (int i = 0; i < cities.size(); i++) {
+				hx.add(cities.get(i).getX());
+			}
+			for (int i = 0; i < houseX.size(); i++) {
+				if (!hx.contains(houseX.get(i))) {
+					cities.add(new cities(houseX.get(i), houseY.get(i), 100, 50));
+					break;
 				}
 			}
 		}
@@ -162,20 +165,7 @@ private ArrayList<Satellite> space;
 			window.setColor(Color.WHITE);
 			window.drawString("GAME OVER", 600, 300 );
 		}
-		for(Satellite s:space){
-			if((Math.random()*1000)>999){
-				s.setShow(true);
-			}
-			if(s.isShow()) {
-				s.move();
-				s.inBounds(window);
-				s.paint(window);
-				if ((Math.random() * 1000) > 965) {
-					int target = (int) (Math.random() * 6);
-					ar.add(new missiles(1, s.getX(), s.getY(), 5, 5, houseX.get(target), houseY.get(target), true));
-				}
-			}
-		}
+
 
 
 
@@ -245,3 +235,4 @@ private ArrayList<Satellite> space;
 
 	
 }
+
