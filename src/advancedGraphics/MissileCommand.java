@@ -22,6 +22,7 @@ private ArrayList<cities> cities;
 private ArrayList<explosion> explo;
 private ammunition am;
 private boolean gameOver;
+private ArrayList<Satellite> space;
 	public MissileCommand ()
 	{
 		score=0;
@@ -41,6 +42,7 @@ private boolean gameOver;
 		for(int y=0;y<yCoord.length;y++){
 			houseY.add(yCoord[y]);
 		}
+		space=new ArrayList<Satellite>();
 		cities = new ArrayList<cities>();
 		ar=new ArrayList<missiles>();
 		for(int x=0;x<6;x++){
@@ -48,6 +50,9 @@ private boolean gameOver;
 		}
 		for(int z=0; z<100;z++){
 			ar.add(new missiles(0,0,0,2,2,0,0,false));
+		}
+		for(int x=0;x<10;x++) {
+			space.add(new Satellite(0, 50, 50, 50, 5, false));
 		}
 		cAr= new ArrayList<CounterMissile>();
 		explo=new ArrayList<explosion>();
@@ -157,7 +162,20 @@ private boolean gameOver;
 			window.setColor(Color.WHITE);
 			window.drawString("GAME OVER", 600, 300 );
 		}
-
+		for(Satellite s:space){
+			if((Math.random()*1000)>999){
+				s.setShow(true);
+			}
+			if(s.isShow()) {
+				s.move();
+				s.inBounds(window);
+				s.paint(window);
+				if ((Math.random() * 1000) > 965) {
+					int target = (int) (Math.random() * 6);
+					ar.add(new missiles(1, s.getX(), s.getY(), 5, 5, houseX.get(target), houseY.get(target), true));
+				}
+			}
+		}
 
 
 
