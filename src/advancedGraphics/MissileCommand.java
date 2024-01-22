@@ -14,16 +14,22 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 public class MissileCommand extends JPanel implements Runnable,MouseListener,MouseMotionListener,KeyListener{
-private int mouse_x,mouse_y;
+private int mouse_x,mouse_y,score,ammo;
 private ArrayList<missiles> ar;
 private ArrayList<CounterMissile> cAr;
 private ArrayList<Integer> houseX,houseY;
 private ArrayList<cities> cities;
 private ArrayList<explosion> explo;
+private ammunition am;
+private boolean gameOver;
 	public MissileCommand ()
 	{
+		score=0;
+		gameOver=false;
 		mouse_x=0;
+		ammo=30;
 		mouse_y=0;
+		am=new ammunition(600, 520, 20, 10);
 		setBackground(Color.WHITE);
 		int[] xCoord=new int[] {200, 350, 450, 750, 900, 1000};
 		int[] yCoord=new int[] {500, 500, 500, 490, 490, 490};
@@ -61,12 +67,17 @@ private ArrayList<explosion> explo;
 		Graphics2D g2= (Graphics2D) window;
 		Image back= Toolkit.getDefaultToolkit().getImage("background.png");
 		g2.drawImage(back,0,0,1200,600,this);
+		if(!gameOver){
 		window.drawString("Mouse  coordinates " + "(" + MouseInfo.getPointerInfo().getLocation().x + "   " + MouseInfo.getPointerInfo().getLocation().y + ")", 250, 30 );	
 		
 		crosshair plus=new crosshair(mouse_x,mouse_y);
 		plus.paint(window);
-		
-	
+		if(ammo==0){
+			gameOver=true;
+		}
+		if(cities.size()==0){
+			gameOver=true;
+		}
 		for(cities c: cities){
 			c.paint(window);
 		}
@@ -75,7 +86,7 @@ private ArrayList<explosion> explo;
 			e.paint(window);
 			e.setShow(false);
 		}
-	
+		am.paint(window);
 			
 		for(int m=0;m<cAr.size();m++){
 			if(cAr.get(m).isShow()){
@@ -85,6 +96,8 @@ private ArrayList<explosion> explo;
 				for(int c=0;c<ar.size();c++){
 					if(cAr.get(m).isShow()|| ar.get(c).isShow()){
 						if(cAr.get(m).intersects(ar.get(c))){
+							score+=25;
+							ammo+=1;
 							explo.add(new explosion(cAr.get(m).getX(), cAr.get(m).getY(), true)) ;
 							cAr.remove(m);
 							ar.remove(c);
@@ -92,6 +105,9 @@ private ArrayList<explosion> explo;
 					}
 					
 				}
+			}
+			else{
+				cAr.remove(m);
 			}
 			
 		}
@@ -105,10 +121,17 @@ private ArrayList<explosion> explo;
 				if(m.intersects(cities.get(c))){
 					m.setShow(false);
 					explo.add(new explosion(m.getX(), m.getY(), true));
-            		
 					cities.remove(c);
-					houseX.remove(c);
-					houseY.remove(c);
+				}
+			}
+			if(score>=1250&&cities.size()<6){
+				score-=1250;
+				for (int i = 0; i < 6; i++) {
+					if(houseX.contains(houseX.get(i))){
+					}
+					else {
+						cities.add(new cities(houseX.get(i),houseY.get(i),100,50));
+					}
 				}
 			}
 		}
@@ -126,8 +149,14 @@ private ArrayList<explosion> explo;
 				ar.get(x).setCityY(houseY.get(target));
 				x+=1;
 			}
-	   }
-	}
+	  	 }
+		
+		else{
+			window.setColor(Color.BLUE);
+			window.fillRect(600, 290, 70, 10);
+			window.setColor(Color.WHITE);
+			window.drawString("GAME OVER", 600, 300 );
+		}
 
 
 
@@ -153,14 +182,19 @@ private ArrayList<explosion> explo;
 	}
 	public void keyTyped(KeyEvent e){}
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == 65) {
-			cAr.add(new CounterMissile(2,90, 505, 4, 4,mouse_x,mouse_y,true));
-		}
-		if(e.getKeyCode() == 83) {
-			cAr.add(new CounterMissile(2,600, 490, 4, 4,mouse_x,mouse_y,true));
-		}
-		if(e.getKeyCode() == 68) {
-			cAr.add(new CounterMissile(2,1140, 505, 4, 4,mouse_x,mouse_y,true));
+		if(cAr.size()<ammo){
+			if(e.getKeyCode() == 65) {
+				cAr.add(new CounterMissile(2,90, 505, 4, 4,mouse_x,mouse_y,true));
+				ammo-=1;
+			}
+			if(e.getKeyCode() == 83) {
+				cAr.add(new CounterMissile(2,600, 490, 4, 4,mouse_x,mouse_y,true));
+				ammo-=1;
+			}
+			if(e.getKeyCode() == 68) {
+				cAr.add(new CounterMissile(2,1140, 505, 4, 4,mouse_x,mouse_y,true));
+				ammo-=1;
+			}
 		}
 	}
 	public void keyReleased(KeyEvent e){}
